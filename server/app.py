@@ -1,4 +1,5 @@
 # server/app.py
+#!/usr/bin/env python3
 
 from flask import Flask, make_response
 from flask_migrate import Migrate
@@ -13,10 +14,15 @@ migrate = Migrate(app, db)
 
 db.init_app(app)
 
-# add views here 
+
 @app.route('/')
 def index():
-    return make_response("Hello, world!", 200)
+    response = make_response(
+        '<h1>Welcome to the pet directory!</h1>',
+        200
+    )
+    return response
+
 
 @app.route('/pets/<int:id>')
 def pet_by_id(id):
@@ -43,6 +49,7 @@ def pet_by_species(species):
         response_body += f'<p>{pet.name}</p>'
     response = make_response(response_body, 200)
     return response
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
